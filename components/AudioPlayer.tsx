@@ -15,6 +15,7 @@ function AudioPlayer({ track, isPlaying, onTrackEnd} : AudioPlayerProps) {
         if (audioRef.current) {
             audioRef.current.volume = volume/100
             if (isPlaying && track) {
+
                 audioRef.current.play();
             } else {
                 audioRef.current.pause();
