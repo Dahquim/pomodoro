@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  outline: none;
+  user-select: none;
+}
+body {
+  overflow-x: hidden;
+}
+
+:root:has(
+    :is(
+        .modal-open,
+        .modal:target,
+        .modal-toggle:checked + .modal,
+        .modal[open]
+      )
+  ) {
+  scrollbar-gutter: unset;
+}
+
+#pomodoro {
+  #clock {
+    justify-content: center;
+    @media all and (min-width: 512px){
+      margin-bottom: -32px;
+    padding: 204px 0;
+  }
+    @media all and (max-width: 184px){
+      margin-bottom: -11.5px;
+      padding: 73px 0;
+    }
+    #timer {
+      $hover: 5;
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      #controls {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 15px;
+        margin-top: 5px;
+        text-align: center;
+        text-transform: uppercase;
+        .fas, .svg-inline--fa {
+          position: relative;
+        }
+        #start, #pause, #reset {
+          white-space: nowrap;
+        }
+        #start {
+          .fa-play {
+            font-size: 77%;
+            top: -1px;
+          }
+        }
+        #pause {
+          .fa-pause {
+            font-size: 90%;
+            top: -1px;
+            transform: scaleX(.84);
+          }
+
+        }
+        #reset {
+          position: absolute;
+          margin-top: 17.56px;
+          transition: margin-top .43s, opacity .43s;
+          .fa-sync-alt {
+            font-size: 84%;
+          }
+
+        }
+        &.reset {
+          #pause {
+            display: none;
+          }
+          #reset {
+            margin-top: 0;
+            opacity: 0;
+            z-index: -1;
+          }
+        }
+        &.started {
+          #start {
+            display: none;
+          }
+          #reset {
+            opacity: 0;
+          }
+        }
+        &.paused {
+          #pause {
+            display: none;
+          }
+        }
+        @media all and (max-width: 512px){
+          font-size: 5.5vw;
+          line-height: 5.5vw;
+          #start, #pause, #reset {
+            font-size: 3vw;
+            line-height: 3vw;
+          }
+          #reset {
+            margin-top: 3.43vw;
+          }
+        }
+        @media all and (max-width: 184px){
+          font-size: 10px;
+          line-height: 10px;
+          #start, #pause, #reset {
+            font-size: 5.5px;
+            line-height: 5.5px;
+          }
+          #reset {
+            margin-top: 6.31px;
+          }
+        }
+      }
+    }
+  }
+  #options {
+    justify-content: center;
+    text-align: center;
+    #session, #break {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    }
+    input[type=number]{
+      text-align: center;
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+      }
+    }
+  }
+}
+audio {
+  display: none;
+}
