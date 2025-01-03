@@ -1,6 +1,6 @@
 "use client"
 
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import CircleTimer from "@/components/CircleTimer";
 import AudioPlayer from "@/components/AudioPlayer";
 import AboutButton from "@/components/AboutButton";
@@ -17,6 +17,12 @@ export default function Home() {
     const [ isPlaying, setIsPlaying ] = useState(false);
     const [ currentTrack, setCurrentTrack ] = useState<string>("/mp3/forest.mp3")
     const [ selectedTrack, setSelectedTrack ] = useState<string>("forest");
+    const [ clickSound ] = useState<string>("/mp3/click.wav")
+
+    const clickRef = useRef<HTMLAudioElement | null>(null)
+    if(clickRef.current) {
+        clickRef.current.volume = 0.2
+    }
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
@@ -37,17 +43,19 @@ export default function Home() {
                     }
                     return prev -1;
                 });
-            }, 10)
+            }, 1000)
         }
         return () => clearInterval(timer)
-    }, [isRunning, isSession, sessionLength, breakLength]);
+    }, [isRunning, isSession, sessionLength, breakLength, sessionCount]);
 
     const handleStartPause = () => {
+        clickRef.current?.play();
         setIsPlaying((prev) => !prev);
         setIsRunning((prev) => !prev);
     }
 
     const handleReset = () => {
+        clickRef.current?.play();
         setIsRunning(false);
         setIsSession(true)
         setSessionCount(1)
@@ -55,12 +63,16 @@ export default function Home() {
     }
 
     const handleSessionChange = (value: number) => {
+        clickRef.current?.pause();
+        clickRef.current?.play();
         const newSessionLength = Math.min(Math.max(value, 5), 60) * 60;
         setSessionLength(newSessionLength)
         setTimeLeft(newSessionLength)
     }
 
     const handleBreakChange = (value: number) => {
+        clickRef.current?.pause();
+        clickRef.current?.play();
         const newBreakLength = Math.min(Math.max(value, 1), 10) * 60;
         setBreakLength(newBreakLength);
     }
@@ -75,7 +87,7 @@ export default function Home() {
     }
 
     return (
-        <main className="bg-gradient-to-b from-base-300 to-base">
+        <main className="bg-gradient-to-b from-base-300 to-base overflow-auto touch-none">
             <div id="pomodoro" className="w-screen">
                 <TrackSelect
                     selectedTrack={selectedTrack}
@@ -101,6 +113,7 @@ export default function Home() {
                         isPlaying={isPlaying}
                         onTrackEnd={handleTrackEnd}
                     />
+                    <audio ref={clickRef} src={clickSound} />
                 </div>
                 <AboutButton />
             </div>

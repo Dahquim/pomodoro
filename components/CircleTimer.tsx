@@ -40,7 +40,7 @@ const CircleTimer = ({
     }
 
     return (
-        <div className="container justify-center py-20 flex-1">
+        <div className="container justify-center py-12 flex-1">
             <div className="button button--circle">
                 <div className="button__text text-center bg-white p-5 rounded-full h-44 w-48">
                     <div className="text-secondary font-bold text-2xl">{isSession ? `Session ${sessionCount}` : "Break"}</div>
@@ -52,9 +52,9 @@ const CircleTimer = ({
                     <div className="flex flex-col items-center">
                         {isRunning ? (
                             <button onClick={handleStartPause} className="text-secondary">
-                                    <span className="flex items-center">
+                                    <span className="flex items-center ">
                                         <Pause size={16}/>
-                                        <span className="text-lg">Pause</span>
+                                        <span className="text-lg ">Pause</span>
                                     </span>
                             </button>
                         ) : (
@@ -76,9 +76,9 @@ const CircleTimer = ({
                     </div>
                 </div>
                 <div className="button__bubble-container">
-                    <span className="bubble bg-primary/60 w-96 h-96 m-auto"></span>
                     <span className="bubble bg-primary/60 w-80 h-80 m-auto"></span>
                     <span className="bubble bg-primary/60 w-72 h-72 m-auto"></span>
+                    <span className="bubble bg-primary/60 w-64 h-64 m-auto"></span>
                 </div>
             </div>
         </div>
